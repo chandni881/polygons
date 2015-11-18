@@ -22,8 +22,26 @@ div{
 #container{
 	position: relative;
 	width:1030px;
-	height:600px;
+	height:1200px;
 }
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+/*NEVER ENDING SHARKS*/
+.statRunTime{
+	position: absolute;
+	color:#cccc27;
+	/*float:left;*/
+	margin-left: 0;
+	margin-top: 615px;
+}
+.statNumMoves{
+	position: absolute;
+	color:#cccc27;
+	/*float:left;*/
+	margin-left: 0;
+	margin-top: 645px;
+}
+
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 #canvas{
 	display: block;
 	float:left;
