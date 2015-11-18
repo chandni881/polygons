@@ -62,6 +62,7 @@ addAsset("mehCircle","../img/meh_circle.png");
 addAsset("sadCircle","../img/sad_circle.png");
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 var IS_PICKING_UP = false;
 var lastMouseX, lastMouseY;
 
@@ -589,8 +590,12 @@ window.requestAnimFrame = window.requestAnimationFrame ||
 	}
 })();
 
-window.IS_IN_SIGHT = false;
+// !!!!!!!!!!!!!!!!!!!!!!!
+// NEVER ENDING SHARKS
+//window.IS_IN_SIGHT = false;
+window.IS_IN_SIGHT = true;
 
+// !!!!!!!!!!!!!!!!!!!!!!!!
 window.onload=function(){
 	reset();
 }
