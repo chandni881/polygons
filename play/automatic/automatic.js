@@ -15,10 +15,23 @@ var DIAGONAL_SQUARED = (TILE_SIZE+5)*(TILE_SIZE+5) + (TILE_SIZE+5)*(TILE_SIZE+5)
 
 window.RATIO_TRIANGLES = 0.25;
 window.RATIO_SQUARES = 0.25;
-window.RATIO_PENTAGONS = 0.25;
+//window.RATIO_PENTAGONS = 0.25;
+//window.EMPTINESS = 0.25;
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// NEVER ENDING SHARKS
+window.RATIO_CIRCLES = 0.25;
+// new pairwise ratios - needed for graph
+window.RATIO_TRIANGLES_TO_SQUARES = window.RATIO_TRIANGLES /window.RATIO_SQUARES;
+window.RATIO_TRIANGLES_TO_CIRCLES = window.RATIO_TRIANGLES /window.RATIO_CIRCLES;
+window.RATIO_SQUARES_TO_CIRCLES = window.RATIO_SQUARES /window.RATIO_CIRCLES;
+window.RATIO_SQUARES_TO_TRIANGLES = window.RATIO_SQUARES /window.RATIO_TRIANGLES;
+window.RATIO_CIRCLES_TO_SQUARES = window.RATIO_CIRCLES /window.RATIO_SQUARES;
+window.RATIO_CIRCLES_TO_TRIANGLES = window.RATIO_CIRCLES /window.RATIO_TRIANGLES;
 window.EMPTINESS = 0.25;
 
-
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var assetsLeft = 0;
 var onImageLoaded = function(){
 	assetsLeft--;
@@ -37,10 +50,18 @@ addAsset("sadTriangle","../img/sad_triangle.png");
 addAsset("yaySquare","../img/yay_square.png");
 addAsset("mehSquare","../img/meh_square.png");
 addAsset("sadSquare","../img/sad_square.png");
-addAsset("yayPentagon","../img/yay_pentagon.png");
-addAsset("mehPentagon","../img/meh_pentagon.png");
-addAsset("sadPentagon","../img/sad_pentagon.png");
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// NEVER ENDING SHARKS
+//addAsset("yayPentagon","../img/yay_pentagon.png");
+//addAsset("mehPentagon","../img/meh_pentagon.png");
+//addAsset("sadPentagon","../img/sad_pentagon.png");
+//New code added here for circle image files
+addAsset("yayCircle","../img/yay_circle.png");
+addAsset("mehCircle","../img/meh_circle.png");
+addAsset("sadCircle","../img/sad_circle.png");
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var IS_PICKING_UP = false;
 var lastMouseX, lastMouseY;
 
@@ -208,15 +229,30 @@ function Draggable(x,y){
 			}else{
 				img = images.yaySquare;
 			}
-		}else{
+		}
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// NEVER ENDING SHARKS
+		else{
 			if(self.shaking){
-				img = images.sadPentagon;
+				img = images.sadCircle;
 			}else if(self.bored){
-				img = images.mehPentagon;
+				img = images.mehCircle;
 			}else{
-				img = images.yayPentagon;
+				img = images.yayCircle;
 			}
-        }
+		}
+
+        //else{
+			//if(self.shaking){
+			//	img = images.sadPentagon;
+			//}else if(self.bored){
+			//	img = images.mehPentagon;
+			//}else{
+			//	img = images.yayPentagon;
+			//}
+        //}
+
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		// Dangle
 		if(self.dragged){
@@ -235,6 +271,14 @@ function Draggable(x,y){
 
 window.START_SIM = false;
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// NEVER ENDING SHARKS
+// boolean necessary for toggling between random and distance based movement
+// it's here because it needs to be reset with everything else, and this sets it's very first default value
+window.RANDOM_MOVE = true;
+
+// !!!!!!!!!!!!!!!!!!!!!!
+
 var draggables;
 var STATS;
 window.reset = function(){
@@ -251,15 +295,18 @@ window.reset = function(){
 	for(var x=0;x<GRID_SIZE;x++){
 		for(var y=0;y<GRID_SIZE;y++){
             var rand = Math.random();
-			if(rand<(1-window.EMPTINESS)){
-				var draggable = new Draggable((x+0.5)*TILE_SIZE, (y+0.5)*TILE_SIZE);
-                if(rand<window.RATIO_TRIANGLES){
-                    draggable.color = "triangle";
-                }else if(rand<(window.RATIO_TRIANGLES+window.RATIO_SQUARES)){
-                    draggable.color = "square";
-                }else{
-                    draggable.color = "pentagon";
-                }
+			if(rand<(1-window.EMPTINESS)) {
+				var draggable = new Draggable((x + 0.5) * TILE_SIZE, (y + 0.5) * TILE_SIZE);
+				if (rand < window.RATIO_TRIANGLES) {
+					draggable.color = "triangle";
+				} else if (rand < (window.RATIO_TRIANGLES + window.RATIO_SQUARES)) {
+					draggable.color = "square";
+				}
+				// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				// NEVER ENDING SHARKS
+				else {
+					draggable.color = "circle";
+				}
 				draggables.push(draggable);
 			}
 		}
@@ -331,6 +378,18 @@ window.render = function(){
 	// Mouse
 	lastMouseX = Mouse.x;
 	lastMouseY = Mouse.y;
+
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// NEVER ENDING SHARKS
+	// Movement type toggle button
+	if(RANDOM_MOVE){
+		document.getElementById("random_moving").classList.add("random");
+	}else{
+		document.getElementById("random_moving").classList.remove("random");
+	}
+
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 }
 var segregation_text = document.getElementById("segregation_text");
@@ -471,12 +530,49 @@ function step(){
 		}
 	}
 
-	// Go to a random empty spot
-	var spot = empties[Math.floor(Math.random()*empties.length)];
-	if(!spot) return;
-	shaker.gotoX = spot.x;
-	shaker.gotoY = spot.y;
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// NEVER ENDING SHARKS
+	// Allow a selection between original random movement and a smarter movement algorithm
+	//var smartMove = true;
+	if(RANDOM_MOVE){
+		// Go to a random empty spot
+		var spot = empties[Math.floor(Math.random()*empties.length)];
+		if(!spot) return;
+		shaker.gotoX = spot.x;
+		shaker.gotoY = spot.y;
+	}
+	else{
+		// Find the furthest empty spot and move there
+		// First find and store the distances between each empty spot and the current shaker
+		var distances = [];
+		for(var i = 0; i < empties.length; i ++){
+			var distanceX = Math.abs(empties[i].x - shaker.x);
+			var distanceY = Math.abs(empties[i].y - shaker.y);
+			var totalDistance = distanceX + distanceY;
+			distances.push(totalDistance);
+		}
+		// Find the index of the lowest value of totalDistance
+		// This requires the following helper function:
+		function indexOfSmallest(a) {
+			var largest = 0;
+			for (var i = 1; i < a.length; i++) {
+				if (a[i] > a[largest]) largest = i;
+			}
+			return largest;
+		}
+		var smallestDistance = indexOfSmallest(distances);
+		// The last polygon tends to get hung up
+		// If there's only one left, return to random sorting
+		if(shaking.length < 3) RANDOM_MOVE = true;
+		else{
+			var closestSpot = empties[smallestDistance];
+			if(!closestSpot) return;
+			shaker.gotoX = closestSpot.x;
+			shaker.gotoY = closestSpot.y;
+		}
+	}
 
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
 ////////////////////

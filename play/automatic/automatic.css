@@ -87,6 +87,40 @@ div{
 	top:3px;
 }
 
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+/* NEVER ENDING SHARKS */
+/* The following movement classes dictate appearance of movement type toggle button */
+.movement{
+	background: url(../img/movement_type_button.png);
+	width:110px;
+	height:100px;
+	cursor: pointer;
+	float:left;
+
+	position: relative;
+	top:0px;
+
+	-webkit-transition: top 0.1s linear;
+	-moz-transition: top 0.1s linear;
+	-ms-transition: top 0.1s linear;
+	-o-transition: top 0.1s linear;
+	transition: top 0.1s linear;
+}
+
+.movement:hover{
+	top:-5px;
+}
+.movement:active{
+	top:3px;
+}
+
+#random_moving{background-position: 0 -5px;}
+#random_moving.random{background-position: 0 -100px;}
+/* End of movement toggling-related styling */
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
+
 #reset{ background-position: 0 -104px; }
 #reset:hover{ background-position: 0 -156px; }
 
