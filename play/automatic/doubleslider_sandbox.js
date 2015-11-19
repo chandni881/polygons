@@ -9,7 +9,7 @@ var nonconform_text = document.getElementById("nonconform_text");
 var whatever = new DoubleSlider(document.getElementById("slider"),{
     backgrounds:[
         {color:"#555",icon:"ds_sad.png"},
-        {color:"#aaa",icon:"ds_happy.png"},
+        {color:"#FF0000",icon:"ds_happy.png"},
         {color:"#555",icon:"ds_sad.png"}
     ],
     values:[0.20,0.80],
@@ -24,9 +24,61 @@ var whatever = new DoubleSlider(document.getElementById("slider"),{
         bias_text.innerHTML = Math.round(window.BIAS*100)+"%";
         nonconform_text.innerHTML = Math.round(window.NONCONFORM*100)+"%";
 
+    },
+});
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Never Ending Sharks
+// Code to add two new sliders for each polygons
+
+var bias_text_triangle = document.getElementById("bias_text_triangle");
+var nonconform_text_triangle = document.getElementById("nonconform_text_triangle");
+
+var triangle = new DoubleSlider(document.getElementById("slider3"), {
+    backgrounds: [
+        { color: "#555", icon: "ds_sad.png" },
+        { color: "#0000FF", icon: "ds_happy.png" },
+        { color: "#555", icon: "ds_sad.png" }
+    ],
+    values: [0.20, 0.80],
+    onChange: function (values) {
+
+        window.BIAS = values[0];
+        window.NONCONFORM = values[1];
+
+        // Write stats
+        START_SIM = false;
+        window.writeStats();
+        bias_text_triangle.innerHTML = Math.round(window.BIAS * 100) + "%";
+        nonconform_text_triangle.innerHTML = Math.round(window.NONCONFORM * 100) + "%";
+
+    }
+});
+var bias_text_circle = document.getElementById("bias_text_circle");
+var nonconform_text_circle = document.getElementById("nonconform_text_circle");
+
+var circle = new DoubleSlider(document.getElementById("slider4"), {
+    backgrounds: [
+        { color: "#555", icon: "ds_sad.png" },
+        { color: "#FFFF00", icon: "ds_happy.png" },
+        { color: "#555", icon: "ds_sad.png" }
+    ],
+    values: [0.20, 0.80],
+    onChange: function (values) {
+
+        window.BIAS = values[0];
+        window.NONCONFORM = values[1];
+
+        // Write stats
+        START_SIM = false;
+        window.writeStats();
+        bias_text_circle.innerHTML = Math.round(window.BIAS * 100) + "%";
+        nonconform_text_circle.innerHTML = Math.round(window.NONCONFORM * 100) + "%";
+
     }
 });
 
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var whatever = new NSlider(document.getElementById("slider2"),{
     backgrounds:[
         {color:"#FFDD56",icon:"ds_happy.png"},
