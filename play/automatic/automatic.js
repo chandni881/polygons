@@ -461,15 +461,53 @@ window.writeStats = function(){
 	var total = 0;
     var total_shake = 0;
     var total_bored = 0;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//NEVER ENDING SHARKS
+	var totalBlue = 0;
+	var totalYellow = 0;
+	var totalRed = 0;
+	var ammountBlue = 0;
+	var ammountYellow = 0;
+	var ammountRed = 0;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 	for(var i=0;i<draggables.length;i++){
 		var d = draggables[i];
 		total += d.sameness || 0;
         total_shake += (d.shaking?1:0);
         total_bored += (d.bored?1:0);
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//NEVER ENDING SHARKS
+		if(d.color == "triangle"){
+			var d = draggables[i];
+			totalYellow += d.sameness || 0;
+			ammountYellow++;
+			}
+		else if(d.color == "square"){
+			var d = draggables[i];
+			totalBlue += d.sameness || 0;
+			ammountBlue++;
+			}
+		else if(d.color == "circle"){
+			var d = draggables[i];
+			totalRed += d.sameness || 0;
+			ammountRed++;
+			}
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 	var avg = total/draggables.length;
 	var avg_shake = total_shake/draggables.length;
 	var avg_bored = total_bored/draggables.length;
+
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//NEVER ENDING SHARKS
+	var avgYellow = totalYellow/ammountYellow;
+	var avgBlue = totalBlue/ammountBlue;
+	var avgRed = totalRed/ammountRed;
+	if(isNaN(avgYellow)) debugger;
+	if(isNaN(avgBlue)) debugger;
+	if(isNaN(avgRed)) debugger;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if(isNaN(avg)) debugger;
 
 	// If stats oversteps, bump back
@@ -483,38 +521,76 @@ window.writeStats = function(){
 	}
 
 	// AVG -> SEGREGATION
-	var segregation = (avg-0.5)*2;
+	//var segregation = (avg-0.5)*2;
 	var segregation = avg;
 	if(segregation<0) segregation=0;
+
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//NEVER ENDING SHARKS
+	//var segregationYellow = (avgYellow-0.5)*2;
+	var segregationYellow = avgYellow;
+	//var segregationBlue = (avgBlue-0.5)*2;
+	var segregationBlue = avgBlue;
+	//var segregationRed = (avgRed-0.5)*2;
+	var segregationRed = avgRed;
+
+	if(segregationYellow<0) segregationYellow=0;
+	if(segregationBlue<0) segregationBlue=0;
+	if(segregationRed<0) segregationRed=0;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	// Graph it
 	stats_ctx.fillStyle = "#cc2727";
 	var x = STATS.steps - STATS.offset;
-	var y = 250 - segregation*250+10;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//NEVER ENDING SHARKS
+	//var y = 250 - segregation*250+10;
+	var y = 250 - segregationRed*250+10;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	stats_ctx.fillRect(x,y,1,5);
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//NEVER ENDING SHARKS
 	// Text
-	segregation_text.innerHTML = Math.floor(segregation*100)+"%";
+	//segregation_text.innerHTML = Math.floor(segregation*100)+"%";
+	segregation_text.innerHTML = Math.floor(segregationRed*100)+"%";
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	segregation_text.style.top = Math.round(y-15)+"px";
 	segregation_text.style.left = Math.round(x+35)+"px";
 
 	stats_ctx.fillStyle = "#2727cc";
-	y = 250 - avg_shake*250+10;
+	//y = 250 - avg_shake*250+10;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//NEVER ENDING SHARKS
+	y = 250 - segregationBlue*250+10;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	stats_ctx.fillRect(x,y,1,5);
 	// Text
     if(shaking_text){
-        shaking_text.innerHTML = Math.floor(avg_shake*100)+"%";
+        //shaking_text.innerHTML = Math.floor(avg_shake*100)+"%";
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//NEVER ENDING SHARKS
+		shaking_text.innerHTML = Math.floor(segregationBlue*100)+"%";
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         shaking_text.style.top = Math.round(y-15)+"px";
         shaking_text.style.left = Math.round(x+35)+"px";
     }
 
 	stats_ctx.fillStyle = "#cccc27";
-	y = 250 - avg_bored*250+10;
+	//y = 250 - avg_bored*250+10;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//NEVER ENDING SHARKS
+	y = 250 - segregationYellow*250+10;
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	stats_ctx.fillRect(x,y,1,5);
 	// Text
     if(bored_text){
-	bored_text.innerHTML = Math.floor(avg_bored*100)+"%";
-	bored_text.style.top = Math.round(y-15)+"px";
-	bored_text.style.left = Math.round(x+35)+"px";
+		//bored_text.innerHTML = Math.floor(avg_bored*100)+"%";
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//NEVER ENDING SHARKS
+		bored_text.innerHTML = Math.floor(segregationYellow*100)+"%";
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		bored_text.style.top = Math.round(y-15)+"px";
+		bored_text.style.left = Math.round(x+35)+"px";
     }
 
 	// Button
