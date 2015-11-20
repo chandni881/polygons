@@ -31,6 +31,11 @@ window.RATIO_CIRCLES_TO_SQUARES = window.RATIO_CIRCLES /window.RATIO_SQUARES;
 window.RATIO_CIRCLES_TO_TRIANGLES = window.RATIO_CIRCLES /window.RATIO_TRIANGLES;
 window.EMPTINESS = 0.25;
 
+var runTime = document.getElementById("runTime");
+runTime.innerHTML = 0;
+var numMoves = document.getElementById("numMoves");
+numMoves.innerHTML = 0;
+
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var assetsLeft = 0;
 var onImageLoaded = function(){
@@ -67,7 +72,7 @@ var IS_PICKING_UP = false;
 var lastMouseX, lastMouseY;
 
 function Draggable(x,y){
-
+	
 	var self = this;
 	self.x = x;
 	self.y = y;
@@ -126,7 +131,7 @@ function Draggable(x,y){
 			self.gotoX = pickupX;
 			self.gotoY = pickupY;
 		}else{
-
+			
 			STATS.steps++;
 			writeStats();
 
@@ -204,7 +209,7 @@ function Draggable(x,y){
 	self.draw = function(){
 		ctx.save();
 		ctx.translate(self.x,self.y);
-
+		
 		if(self.shaking){
 			self.frame+=0.07;
 			ctx.translate(0,20);
@@ -278,17 +283,35 @@ window.START_SIM = false;
 // it's here because it needs to be reset with everything else, and this sets it's very first default value
 window.RANDOM_MOVE = true;
 
-// !!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 var draggables;
 var STATS;
 window.reset = function(){
+
+	var runTime = document.getElementById("runTime");
+	runTime.innerHTML = 0;
+	var numMoves = document.getElementById("numMoves");
+	numMoves.innerHTML = 0;
 
 	STATS = {
 		steps:0,
 		offset:0
 	};
 	START_SIM = false;
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ 	// NEVER ENDING SHARKS
+	// boolean necessary for toggling between random and distance based movement
+	// it's here because it needs to be reset with everything else, and this sets it's very first default value
+	window.RANDOM_MOVE = true;
+
+	//// reset timer
+	//runTime.innerHTML = 0;
+    //
+	////reset number of moves
+	//numMoves.innerHTML = 0;
+
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	stats_ctx.clearRect(0,0,stats_canvas.width,stats_canvas.height);
 
@@ -324,10 +347,26 @@ window.reset = function(){
 window.render = function(){
 
 	if(assetsLeft>0 || !draggables) return;
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// NEVER ENDING SHARKS
+	// Timer var and related method needs to be accessible to entire render function
+	var timer = 0;
+	var t = 0;
+	function runTimer(){
+		t += 1;
+		runTime.innerHTML = t;
+	}
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	// Is Stepping?
 	if(START_SIM){
 		step();
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// NEVER ENDING SHARKS
+		//var startTime = new Date().getTime();
+		timer = setInterval(runTimer, 1000);
+
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 
 	// Draw
@@ -352,7 +391,15 @@ window.render = function(){
 
 	// Done stepping?
 	if(isDone()){
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// NEVER ENDING SHARKS
+		//var endTime = new Date().getTime();
+		//runTime.innerHTML = endTime - startTime;
+		clearInterval(timer);
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		doneBuffer--;
+
+
 		if(doneBuffer==0){
 			doneAnimFrame = 30;
 			START_SIM = false;
@@ -409,62 +456,20 @@ window.writeStats = function(){
 	if(!draggables || draggables.length==0) return;
 
 	// Average Sameness Ratio
-	// Average shaking
-	// Average bored
+	// Average shaking 
+	// Average bored 
 	var total = 0;
     var total_shake = 0;
     var total_bored = 0;
-
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//NEVER ENDING SHARKS
-	var totalBlue = 0;
-	var totalYellow = 0;
-	var totalRed = 0;
-	var ammountBlue = 0;
-	var ammountYellow = 0;
-	var ammountRed = 0;
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 	for(var i=0;i<draggables.length;i++){
 		var d = draggables[i];
 		total += d.sameness || 0;
         total_shake += (d.shaking?1:0);
         total_bored += (d.bored?1:0);
-
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//NEVER ENDING SHARKS
-		if(d.color == "triangle"){
-			var d = draggables[i];
-			totalYellow += d.sameness || 0;
-			ammountYellow++;
-		}
-		else if(d.color == "square"){
-			var d = draggables[i];
-			totalBlue += d.sameness || 0;
-			ammountBlue++;
-		}
-		else if(d.color == "circle"){
-			var d = draggables[i];
-			totalRed += d.sameness || 0;
-			ammountRed++;
-		}
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 	}
 	var avg = total/draggables.length;
 	var avg_shake = total_shake/draggables.length;
 	var avg_bored = total_bored/draggables.length;
-
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//NEVER ENDING SHARKS
-	var avgYellow = totalYellow/ammountYellow;
-	var avgBlue = totalBlue/ammountBlue;
-	var avgRed = totalRed/ammountRed;
-	if(isNaN(avgYellow)) debugger;
-	if(isNaN(avgBlue)) debugger;
-	if(isNaN(avgRed)) debugger;
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 	if(isNaN(avg)) debugger;
 
 	// If stats oversteps, bump back
@@ -479,73 +484,35 @@ window.writeStats = function(){
 
 	// AVG -> SEGREGATION
 	var segregation = (avg-0.5)*2;
-	var segregation = avg; //NEVER ENDING SHARKS: Austin - Why in the world did they do this?
+	var segregation = avg;
 	if(segregation<0) segregation=0;
-
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//NEVER ENDING SHARKS
-	//var segregationYellow = (avgYellow-0.5)*2;
-	var segregationYellow = avgYellow;
-	//var segregationBlue = (avgBlue-0.5)*2;
-	var segregationBlue = avgBlue;
-	//var segregationRed = (avgRed-0.5)*2;
-	var segregationRed = avgRed;
-
-	if(segregationYellow<0) segregationYellow=0;
-	if(segregationBlue<0) segregationBlue=0;
-	if(segregationRed<0) segregationRed=0;
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	// Graph it
 	stats_ctx.fillStyle = "#cc2727";
 	var x = STATS.steps - STATS.offset;
-	//var y = 250 - segregation*250+10; NEVER ENDING SHARKS REMOVE
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//NEVER ENDING SHARKS
-	var y = 250 - segregationRed*250+10;
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	var y = 250 - segregation*250+10;
 	stats_ctx.fillRect(x,y,1,5);
 	// Text
-	//segregation_text.innerHTML = Math.floor(segregation*100)+"%"; NEVER ENDING SHARKS REMOVE
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//NEVER ENDING SHARKS
-	segregation_text.innerHTML = Math.floor(segregationRed*100)+"%";
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	segregation_text.innerHTML = Math.floor(segregation*100)+"%";
 	segregation_text.style.top = Math.round(y-15)+"px";
 	segregation_text.style.left = Math.round(x+35)+"px";
 
 	stats_ctx.fillStyle = "#2727cc";
-	//y = 250 - avg_shake*250+10; NEVER ENDING SHARKS REMOVE
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//NEVER ENDING SHARKS
-	y = 250 - segregationBlue*250+10;
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	y = 250 - avg_shake*250+10;
 	stats_ctx.fillRect(x,y,1,5);
 	// Text
     if(shaking_text){
-        //shaking_text.innerHTML = Math.floor(avg_shake*100)+"%"; NEVER ENDING SHARKS REMOVE
-				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				//NEVER ENDING SHARKS
-				shaking_text.innerHTML = Math.floor(segregationBlue*100)+"%";
-				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        shaking_text.innerHTML = Math.floor(avg_shake*100)+"%";
         shaking_text.style.top = Math.round(y-15)+"px";
         shaking_text.style.left = Math.round(x+35)+"px";
     }
 
 	stats_ctx.fillStyle = "#cccc27";
-	//y = 250 - avg_bored*250+10; NEVER ENDING SHARKS REMOVE
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//NEVER ENDING SHARKS
-	y = 250 - segregationYellow*250+10;
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	y = 250 - avg_bored*250+10;
 	stats_ctx.fillRect(x,y,1,5);
 	// Text
     if(bored_text){
-	//bored_text.innerHTML = Math.floor(avg_bored*100)+"%"; NEVER ENDING SHARKS REMOVE
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//NEVER ENDING SHARKS
-	bored_text.innerHTML = Math.floor(segregationYellow*100)+"%";
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	bored_text.innerHTML = Math.floor(avg_bored*100)+"%";
 	bored_text.style.top = Math.round(y-15)+"px";
 	bored_text.style.left = Math.round(x+35)+"px";
     }
@@ -614,13 +581,14 @@ function step(){
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// NEVER ENDING SHARKS
 	// Allow a selection between original random movement and a smarter movement algorithm
-	//var smartMove = true;
 	if(RANDOM_MOVE){
 		// Go to a random empty spot
 		var spot = empties[Math.floor(Math.random()*empties.length)];
 		if(!spot) return;
 		shaker.gotoX = spot.x;
 		shaker.gotoY = spot.y;
+		// increment numMoves
+		numMoves.innerHTML++;
 	}
 	else{
 		// Find the furthest empty spot and move there
@@ -650,6 +618,8 @@ function step(){
 			if(!closestSpot) return;
 			shaker.gotoX = closestSpot.x;
 			shaker.gotoY = closestSpot.y;
+			// increment numMoves
+			numMoves.innerHTML++;
 		}
 	}
 
@@ -676,6 +646,7 @@ window.requestAnimFrame = window.requestAnimationFrame ||
 window.IS_IN_SIGHT = true;
 
 // !!!!!!!!!!!!!!!!!!!!!!!!
+
 window.onload=function(){
 	reset();
 }
