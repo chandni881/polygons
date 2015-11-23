@@ -8,16 +8,16 @@ var nonconform_text_square = document.getElementById("nonconform_text_square");
 
 var square = new DoubleSlider(document.getElementById("slider_square"),{
     backgrounds:[
-        {color:"#FFFF00",icon:"ds_sad.png"},
+        {color:"#555",icon:"ds_sad.png"},
         {color:"#0000FF",icon:"ds_happy.png"},
-        {color:"#FF0000",icon:"ds_sad.png"}
+        {color:"#555",icon:"ds_sad.png"}
     ],
     values:[0.20,0.80],
     onChange:function(values){
 
         window.BIAS_square = values[0];
         window.NONCONFORM_square = values[1];
-
+        window.squareSlider = 1;
         // Write stats
         START_SIM = false;
         window.writeStats();
@@ -36,16 +36,16 @@ var nonconform_text_triangle = document.getElementById("nonconform_text_triangle
 
 var triangle = new DoubleSlider(document.getElementById("slider_triangle"), {
     backgrounds: [
-        { color: "#FF0000", icon: "ds_sad.png" },
+        { color: "#555", icon: "ds_sad.png" },
         { color: "#FFFF00", icon: "ds_happy.png" },
-        { color: "#0000FF", icon: "ds_sad.png" }
+        { color: "#555", icon: "ds_sad.png" }
     ],
     values: [0.20, 0.80],
     onChange: function (values) {
 
         window.BIAS_triangle = values[0];
         window.NONCONFORM_triangle = values[1];
-
+        window.triangleSlider = 2;
         // Write stats
         START_SIM = false;
         window.writeStats();
@@ -61,16 +61,16 @@ var nonconform_text_circle = document.getElementById("nonconform_text_circle");
 
 var circle = new DoubleSlider(document.getElementById("slider_circle"), {
     backgrounds: [
-        { color: "#0000FF", icon: "ds_sad.png" },
+        { color: "#555", icon: "ds_sad.png" },
         { color: "#FF0000", icon: "ds_happy.png" },
-        { color: "#FFFF00", icon: "ds_sad.png" }
+        { color: "#555", icon: "ds_sad.png" }
     ],
     values: [0.20, 0.80],
     onChange: function (values) {
 
         window.BIAS_circle = values[0];
         window.NONCONFORM_circle = values[1];
-
+        window.circleSlider = 3;
         // Write stats
         START_SIM = false;
         window.writeStats();

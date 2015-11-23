@@ -3,13 +3,20 @@ var ctx = canvas.getContext("2d");
 
 var stats_canvas = document.getElementById("stats_canvas");
 var stats_ctx = stats_canvas.getContext("2d");
-
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Never Ending Sharks
+// Variables for the new sliders
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var NONCONFORM_square = 1.00; 
 var BIAS_square = 0.33;
 var NONCONFORM_triangle = 1.00;
 var BIAS_triangle = 0.33;
 var NONCONFORM_circle = 1.00;
 var BIAS_circle = 0.33;
+var circleSlider;
+var squareSlider;
+var triangleSlider;
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
 var TILE_SIZE = 30;
 var PEEP_SIZE = 30;
 var GRID_SIZE = 20;
@@ -170,20 +177,28 @@ function Draggable(x,y){
 		    //<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		    // Never Ending Sharks
 		    //  For new sliders
-		    
-		    if (self.color == "square") {
-		        if (self.sameness < BIAS_triangle || self.sameness > NONCONFORM_circle) {
-		            self.shaking = true;
+		    // code to change the bias level for all three polygons
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
+		    if (squareSlider == 1) {
+		        if (self.color == "square") {
+		            if (self.sameness < BIAS_square || self.sameness > NONCONFORM_square) {
+		                self.shaking = true;
+		            }
 		        }
 		    }
-		    if(self.color=="triangle"){
-		             if(self.sameness<BIAS_circle || self.sameness>NONCONFORM_square){
-		        self.shaking = true;
+
+		    if (triangleSlider == 2) {
+		        if (self.color == "triangle") {
+		            if (self.sameness < BIAS_triangle || self.sameness > NONCONFORM_triangle) {
+		                self.shaking = true;
+		            }
+		        }
 		    }
-		    }
-		    if(self.color=="circle"){
-		        if (self.sameness < BIAS_square || self.sameness > NONCONFORM_triangle) {
-		            self.shaking = true;
+		    if (circleSlider == 3) {
+		        if (self.color == "circle") {
+		            if (self.sameness < BIAS_circle || self.sameness > NONCONFORM_circle) {
+		                self.shaking = true;
+		            }
 		        }
 		    }
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
