@@ -9,7 +9,7 @@ var nonconform_text_square = document.getElementById("nonconform_text_square");
 var square = new DoubleSlider(document.getElementById("slider_square"),{
     backgrounds:[
         {color:"#555",icon:"ds_sad.png"},
-        {color:"#0000FF",icon:"ds_happy.png"},
+        { color: "#567DFF", icon: "ds_happy.png" },
         {color:"#555",icon:"ds_sad.png"}
     ],
     values:[0.20,0.80],
@@ -37,7 +37,7 @@ var nonconform_text_triangle = document.getElementById("nonconform_text_triangle
 var triangle = new DoubleSlider(document.getElementById("slider_triangle"), {
     backgrounds: [
         { color: "#555", icon: "ds_sad.png" },
-        { color: "#FFFF00", icon: "ds_happy.png" },
+        { color: "#FFDD56", icon: "ds_happy.png" },
         { color: "#555", icon: "ds_sad.png" }
     ],
     values: [0.20, 0.80],
