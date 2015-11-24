@@ -77,11 +77,24 @@ function NSlider(dom,config){
 	    		edge_l = self.values[index-1]+sliderWidth;
 	    		edge_h = self.values[index+1]-sliderWidth;
             }
+
             if(val>edge_h){
                val=edge_h;
             }else if(val<edge_l){
                 val=edge_l;
             }
+			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//NEVER ENDING SHARKS
+			//for(var i = 0; i < (self.sliderCount-1); i++ ){
+			//	if(self.position > 395){
+			//		self.position = 395;
+			//	}else if(self.position > 395){
+			//		self.postion = 395;
+			//	}
+            //
+			//}
+
+			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	    	self.values[index] = val;
 	    	self.updateUI();

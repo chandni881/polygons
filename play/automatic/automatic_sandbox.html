@@ -13,8 +13,8 @@
 <body>
 	<div id="container">
 		<div><canvas id="canvas" width="600" height="600"></canvas>
-		<div class="statRunTime"><span>Runtime: <span id="runTime">0</span> seconds</span></div>
-		<div class="statNumMoves"><span>Number of Moves: <span id="numMoves">0</span><span></div>
+		<div class="statRunTime"><span>Runtime: </span><span id="runTime">  </span><span> seconds</span></div>
+		<div class="statNumMoves"><span>Number of Moves: <span id="numMoves">  </span></span></div>
 		</div>
 		<div id="stats">
 
@@ -48,7 +48,7 @@
             <!----------------------------------------------------------------------------------------->
 			the triangle:square:circle ratio is
 			<span class="highlight">
-                <span id="ratio_text_triangles">25</span>:<span id="ratio_text_squares">25</span>:<span id="ratio_text_pentagons">25</span>
+                <span id="ratio_text_triangles">25</span>:<span id="ratio_text_squares">25</span>:<span id="ratio_text_circles">25</span>
             </span>,
 			board is
 			<span class="highlight" id="empty_text">25% empty</span>
@@ -57,7 +57,7 @@
 			<br>
 
 			<div class="ui" id="moving" onclick="START_SIM=!START_SIM; doneBuffer = 60; window.writeStats()"></div>
-			<div class="ui" id="reset" onclick="reset()" style="margin-left:9px"></div>
+			<div class="ui" id="reset" onclick="window.reset()" style="margin-left:9px"></div>
 
 			<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 			<!--NEVER ENDING SHARKS-->
@@ -79,7 +79,6 @@
 <!--<script src="doubleSliderSharks.js"></script>-->
 <script src="nslider.js"></script>
 <script src="doubleslider_sandbox.js"></script>
-
 
 
 <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
