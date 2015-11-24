@@ -163,7 +163,8 @@ function Draggable(x,y){
 		    var neighbors = 0;
 		    var squareSameness = 0;
 		    var triangleSameness=0;
-		    var circleSameness=0;
+		    var circleSameness = 0;
+		    var same = 0;
 		    for(var i=0;i<draggables.length;i++){
 		        var d = draggables[i];
 		        if(d==self) continue;
@@ -174,6 +175,9 @@ function Draggable(x,y){
 		            //<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		            // Never Ending Sharks
 		            // Pairwise relationship amongs the polygons
+		            if (d.color == self.color) {
+		                same++;
+		            }
 		            if (self.color == "square") {
 		                if (d.color == self.color) {
 		                    squareSameness++;
@@ -212,11 +216,13 @@ function Draggable(x,y){
 
 		        }
 		    }
-		    if(neighbors>0){
+		    if (neighbors > 0) {
+		        self.sameness = (same / neighbors);
 		        self.samenessOfSquare = (squareSameness / neighbors);
 		        self.samenessOfTriangle = (triangleSameness/ neighbors);
 		        self.samenessOfCircle = (circleSameness/ neighbors);
-		    }else{
+		    } else {
+		        self.sameness = 1;
 		        self.samenessOfSquare = 1;
 		        self.samenessOfTriangle= 1;
 		        self.samenessOfCircle = 1;
