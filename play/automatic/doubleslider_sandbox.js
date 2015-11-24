@@ -3,29 +3,85 @@
  */
 window.PICK_UP_ANYONE = true;
 
-var bias_text = document.getElementById("bias_text");
-var nonconform_text = document.getElementById("nonconform_text");
+var bias_text_square = document.getElementById("bias_text_square");
+var nonconform_text_square = document.getElementById("nonconform_text_square");
 
-var whatever = new DoubleSlider(document.getElementById("slider"),{
+var square = new DoubleSlider(document.getElementById("slider_square"),{
     backgrounds:[
         {color:"#555",icon:"ds_sad.png"},
-        {color:"#aaa",icon:"ds_happy.png"},
+        { color: "#567DFF", icon: "ds_happy.png" },
         {color:"#555",icon:"ds_sad.png"}
     ],
     values:[0.20,0.80],
     onChange:function(values){
 
-        window.BIAS = values[0];
-        window.NONCONFORM = values[1];
-
+        window.BIAS_square = values[0];
+        window.NONCONFORM_square = values[1];
+        window.squareSlider = 1;
         // Write stats
         START_SIM = false;
         window.writeStats();
-        bias_text.innerHTML = Math.round(window.BIAS*100)+"%";
-        nonconform_text.innerHTML = Math.round(window.NONCONFORM*100)+"%";
+        bias_text_square.innerHTML = Math.round(window.BIAS_square*100)+"%";
+        nonconform_text_square.innerHTML = Math.round(window.NONCONFORM_square*100)+"%";
 
-    }
+    },
+    
+    });
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Never Ending Sharks
+// Code to add two new sliders for each polygons
+
+var bias_text_triangle = document.getElementById("bias_text_triangle");
+var nonconform_text_triangle = document.getElementById("nonconform_text_triangle");
+
+var triangle = new DoubleSlider(document.getElementById("slider_triangle"), {
+    backgrounds: [
+        { color: "#555", icon: "ds_sad.png" },
+        { color: "#FFDD56", icon: "ds_happy.png" },
+        { color: "#555", icon: "ds_sad.png" }
+    ],
+    values: [0.20, 0.80],
+    onChange: function (values) {
+
+        window.BIAS_triangle = values[0];
+        window.NONCONFORM_triangle = values[1];
+        window.triangleSlider = 2;
+        // Write stats
+        START_SIM = false;
+        window.writeStats();
+        bias_text_triangle.innerHTML = Math.round(window.BIAS_triangle * 100) + "%";
+        nonconform_text_triangle.innerHTML = Math.round(window.NONCONFORM_triangle * 100) + "%";
+
+    },
+   
+    
 });
+var bias_text_circle = document.getElementById("bias_text_circle");
+var nonconform_text_circle = document.getElementById("nonconform_text_circle");
+
+var circle = new DoubleSlider(document.getElementById("slider_circle"), {
+    backgrounds: [
+        { color: "#555", icon: "ds_sad.png" },
+        { color: "#FF0000", icon: "ds_happy.png" },
+        { color: "#555", icon: "ds_sad.png" }
+    ],
+    values: [0.20, 0.80],
+    onChange: function (values) {
+
+        window.BIAS_circle = values[0];
+        window.NONCONFORM_circle = values[1];
+        window.circleSlider = 3;
+        // Write stats
+        START_SIM = false;
+        window.writeStats();
+        bias_text_circle.innerHTML = Math.round(window.BIAS_circle * 100) + "%";
+        nonconform_text_circle.innerHTML = Math.round(window.NONCONFORM_circle * 100) + "%";
+
+    },
+    
+});
+
+
 
 var whatever = new NSlider(document.getElementById("slider2"),{
     backgrounds:[

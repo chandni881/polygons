@@ -20,7 +20,8 @@ function DoubleSlider(dom,config){
 	self.backgrounds = [];
 	self.sliders = [];
 	self.values = config.values;
-
+	//self.shape = shapeobj;
+    
 	self.draggingSliderDOM = null;
 	self.draggingSliderIndex = -1;
 
@@ -79,7 +80,17 @@ function DoubleSlider(dom,config){
 	    	self.updateUI();
 	    	config.onChange(self.values);
 
-		}
+	    }
+	    
+	   /* if (self.shape == squareobj) {
+	        self.obj = 1;
+	    }
+	    if (self.shape == triangleobj ) {
+	        self.obj = 2;
+	    }
+	    if (self.shape == circleobj) {
+	        self.obj = 3;
+	    }*/
 	}
 	function onMouseUp(){
 		if(self.draggingSliderDOM){

@@ -3,15 +3,24 @@ var ctx = canvas.getContext("2d");
 
 var stats_canvas = document.getElementById("stats_canvas");
 var stats_ctx = stats_canvas.getContext("2d");
-
-var NONCONFORM = 1.00;
-var BIAS = 0.33;
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Never Ending Sharks
+// Variables for the new sliders
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+var NONCONFORM_square = 1.00; 
+var BIAS_square = 0.33;
+var NONCONFORM_triangle = 1.00;
+var BIAS_triangle = 0.33;
+var NONCONFORM_circle = 1.00;
+var BIAS_circle = 0.33;
+var circleSlider;
+var squareSlider;
+var triangleSlider;
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
 var TILE_SIZE = 30;
 var PEEP_SIZE = 30;
 var GRID_SIZE = 20;
 var DIAGONAL_SQUARED = (TILE_SIZE+5)*(TILE_SIZE+5) + (TILE_SIZE+5)*(TILE_SIZE+5);
-
-
 
 window.RATIO_TRIANGLES = 0.25;
 window.RATIO_SQUARES = 0.25;
@@ -146,33 +155,58 @@ function Draggable(x,y){
 	var lastPressed = false;
 	self.update = function(){
 
-		// Shakiness?
+		// Shakiness? //shaking = unhappy
 		self.shaking = false;
 		self.bored = false;
 
 		if(!self.dragged){
-			var neighbors = 0;
-			var same = 0;
-			for(var i=0;i<draggables.length;i++){
-				var d = draggables[i];
-				if(d==self) continue;
-				var dx = d.x-self.x;
-				var dy = d.y-self.y;
-				if(dx*dx+dy*dy<DIAGONAL_SQUARED){
-					neighbors++;
-					if(d.color==self.color){
-						same++;
-					}
-				}
-			}
-			if(neighbors>0){
-				self.sameness = (same/neighbors);
-			}else{
-				self.sameness = 1;
-			}
-			if(self.sameness<BIAS || self.sameness>NONCONFORM){
-				self.shaking = true;
-			}
+		    var neighbors = 0;
+		    var same = 0;
+		    for(var i=0;i<draggables.length;i++){
+		        var d = draggables[i];
+		        if(d==self) continue;
+		        var dx = d.x-self.x;
+		        var dy = d.y-self.y;
+		        if(dx*dx+dy*dy<DIAGONAL_SQUARED){
+		            neighbors++;
+		            if(d.color==self.color){
+		                same++;
+		            }
+		        }
+		    }
+		    if(neighbors>0){
+		        self.sameness = (same/neighbors);
+		    }else{
+		        self.sameness = 1;
+		    }
+		    //<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		    // Never Ending Sharks
+		    //  For new sliders
+		    // code to change the bias level for all three polygons
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
+		    if (squareSlider == 1) {
+		        if (self.color == "square") {
+		            if (self.sameness < BIAS_square || self.sameness > NONCONFORM_square) {
+		                self.shaking = true;
+		            }
+		        }
+		    }
+
+		    if (triangleSlider == 2) {
+		        if (self.color == "triangle") {
+		            if (self.sameness < BIAS_triangle || self.sameness > NONCONFORM_triangle) {
+		                self.shaking = true;
+		            }
+		        }
+		    }
+		    if (circleSlider == 3) {
+		        if (self.color == "circle") {
+		            if (self.sameness < BIAS_circle || self.sameness > NONCONFORM_circle) {
+		                self.shaking = true;
+		            }
+		        }
+		    }
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
 			if(self.sameness>0.99){
 				self.bored = true;
 			}
