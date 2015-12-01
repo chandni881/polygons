@@ -161,9 +161,6 @@ function Draggable(x,y){
 
 		if(!self.dragged){
 		    var neighbors = 0;
-		    var squareSameness = 0;
-		    var triangleSameness=0;
-		    var circleSameness = 0;
 		    var same = 0;
 		    for(var i=0;i<draggables.length;i++){
 		        var d = draggables[i];
@@ -172,60 +169,15 @@ function Draggable(x,y){
 		        var dy = d.y-self.y;
 		        if(dx*dx+dy*dy<DIAGONAL_SQUARED){
 		            neighbors++;
-		            //<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		            // Never Ending Sharks
-		            // Pairwise relationship amongs the polygons
-		            if (d.color == self.color) {
+		            if(d.color==self.color){
 		                same++;
 		            }
-		            if (self.color == "square") {
-		                if (d.color == self.color) {
-		                    squareSameness++;
-		                }
-		                else if (d.color == "triangle") {
-		                    triangleSameness++;
-		                }
-		                else {
-		                    circleSameness++;
-		                }
-		            }
-		            if (self.color == "triangle") {
-		                if (d.color == self.color) {
-		                    triangleSameness++;
-		                }
-		                else if (d.color == "square") {
-		                    squareSameness++;
-		                }
-		                else {
-		                    circleSameness++;
-		                }
-
-		            }
-		            if (self.color == "circle") {
-		                if (d.color == self.color) {
-		                    circleSameness++;
-		                }
-		                else if (d.color == "square") {
-		                    squareSameness++;
-		                }
-		                else {
-		                    triangleSameness++;
-		                }
-
-		            }
-
 		        }
 		    }
-		    if (neighbors > 0) {
-		        self.sameness = (same / neighbors);
-		        self.samenessOfSquare = (squareSameness / neighbors);
-		        self.samenessOfTriangle = (triangleSameness/ neighbors);
-		        self.samenessOfCircle = (circleSameness/ neighbors);
-		    } else {
+		    if(neighbors>0){
+		        self.sameness = (same/neighbors);
+		    }else{
 		        self.sameness = 1;
-		        self.samenessOfSquare = 1;
-		        self.samenessOfTriangle= 1;
-		        self.samenessOfCircle = 1;
 		    }
 		    //<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		    // Never Ending Sharks
@@ -234,7 +186,7 @@ function Draggable(x,y){
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
 		    if (squareSlider == 1) {
 		        if (self.color == "square") {
-		            if (self.samenessOfTriangle<BIAS_square ||self.samenessOfCircle>NONCONFORM_square) {
+		            if (self.sameness < BIAS_square || self.sameness > NONCONFORM_square) {
 		                self.shaking = true;
 		            }
 		        }
@@ -242,14 +194,14 @@ function Draggable(x,y){
 
 		    if (triangleSlider == 2) {
 		        if (self.color == "triangle") {
-		            if (self.samenessOfCircle < BIAS_triangle || self.samenessOfSquare > NONCONFORM_triangle) {
+		            if (self.sameness < BIAS_triangle || self.sameness > NONCONFORM_triangle) {
 		                self.shaking = true;
 		            }
 		        }
 		    }
 		    if (circleSlider == 3) {
 		        if (self.color == "circle") {
-		            if (self.samenessOfSquare < BIAS_circle || self.samenessOfTriangle > NONCONFORM_circle) {
+		            if (self.sameness < BIAS_circle || self.sameness > NONCONFORM_circle) {
 		                self.shaking = true;
 		            }
 		        }
