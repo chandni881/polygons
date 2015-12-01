@@ -757,21 +757,21 @@ function step(){
 			var totalDistance = distanceX + distanceY;
 			distances.push(totalDistance);
 		}
-		// Find the index of the lowest value of totalDistance
+		// Find the index of the largest value of totalDistance
 		// This requires the following helper function:
-		function indexOfSmallest(a) {
+		function indexOfLargest(a) {
 			var largest = 0;
 			for (var i = 1; i < a.length; i++) {
 				if (a[i] > a[largest]) largest = i;
 			}
 			return largest;
 		}
-		var smallestDistance = indexOfSmallest(distances);
+		var largestDistance = indexOfLargest(distances);
 		// The last polygon tends to get hung up
 		// If there's only one left, return to random sorting
 		if(shaking.length < 3) RANDOM_MOVE = true;
 		else{
-			var closestSpot = empties[smallestDistance];
+			var closestSpot = empties[largestDistance];
 			if(!closestSpot) return;
 			shaker.gotoX = closestSpot.x;
 			shaker.gotoY = closestSpot.y;
