@@ -41,9 +41,12 @@ window.RATIO_CIRCLES_TO_TRIANGLES = window.RATIO_CIRCLES /window.RATIO_TRIANGLES
 window.EMPTINESS = 0.25;
 
 var runTime = document.getElementById("runTime");
-//runTime.innerHTML = 0;
+runTime.innerHTML = 0;
 var numMoves = document.getElementById("numMoves");
-//numMoves.innerHTML = 0;
+numMoves.innerHTML = 0;
+var goodMoves = document.getElementById("goodMoves");
+goodMoves.innerHTML = 0;
+
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var assetsLeft = 0;

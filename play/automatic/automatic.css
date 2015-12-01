@@ -40,6 +40,13 @@ div{
 	margin-left: 0;
 	margin-top: 645px;
 }
+.statGoodMoves{
+	position: absolute;
+	color:#cccc27;
+	/*float:left;*/
+	margin-left: 0;
+	margin-top: 675px;
+}
 
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 #canvas{
