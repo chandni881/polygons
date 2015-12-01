@@ -8,9 +8,9 @@ var nonconform_text_square = document.getElementById("nonconform_text_square");
 
 var square = new DoubleSlider(document.getElementById("slider_square"),{
     backgrounds:[
-        {color:"#555",icon:"ds_sad.png"},
+        {color:"#FFDD56",icon:"ds_sad.png"},
         { color: "#567DFF", icon: "ds_happy.png" },
-        {color:"#555",icon:"ds_sad.png"}
+        {color:"#FF0000",icon:"ds_sad.png"}
     ],
     values:[0.20,0.80],
     onChange:function(values){
@@ -36,9 +36,9 @@ var nonconform_text_triangle = document.getElementById("nonconform_text_triangle
 
 var triangle = new DoubleSlider(document.getElementById("slider_triangle"), {
     backgrounds: [
-        { color: "#555", icon: "ds_sad.png" },
+        { color: "#FF0000", icon: "ds_sad.png" },
         { color: "#FFDD56", icon: "ds_happy.png" },
-        { color: "#555", icon: "ds_sad.png" }
+        { color: "#567DFF", icon: "ds_sad.png" }
     ],
     values: [0.20, 0.80],
     onChange: function (values) {
@@ -61,9 +61,9 @@ var nonconform_text_circle = document.getElementById("nonconform_text_circle");
 
 var circle = new DoubleSlider(document.getElementById("slider_circle"), {
     backgrounds: [
-        { color: "#555", icon: "ds_sad.png" },
+        { color: "#567DFF", icon: "ds_sad.png" },
         { color: "#FF0000", icon: "ds_happy.png" },
-        { color: "#555", icon: "ds_sad.png" }
+        { color: "#FFDD56", icon: "ds_sad.png" }
     ],
     values: [0.20, 0.80],
     onChange: function (values) {
