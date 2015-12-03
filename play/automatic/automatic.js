@@ -41,9 +41,12 @@ window.RATIO_CIRCLES_TO_TRIANGLES = window.RATIO_CIRCLES /window.RATIO_TRIANGLES
 window.EMPTINESS = 0.25;
 
 var runTime = document.getElementById("runTime");
-//runTime.innerHTML = 0;
+runTime.innerHTML = 0;
 var numMoves = document.getElementById("numMoves");
-//numMoves.innerHTML = 0;
+numMoves.innerHTML = 0;
+var goodMoves = document.getElementById("goodMoves");
+goodMoves.innerHTML = 0;
+
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var assetsLeft = 0;
@@ -67,9 +70,6 @@ addAsset("sadSquare","../img/sad_square.png");
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // NEVER ENDING SHARKS
-//addAsset("yayPentagon","../img/yay_pentagon.png");
-//addAsset("mehPentagon","../img/meh_pentagon.png");
-//addAsset("sadPentagon","../img/sad_pentagon.png");
 //New code added here for circle image files
 addAsset("yayCircle","../img/yay_circle.png");
 addAsset("mehCircle","../img/meh_circle.png");
@@ -371,10 +371,12 @@ var draggables;
 var STATS;
 window.reset = function(){
 
-	//var runTime = document.getElementById("runTime");
+	var runTime = document.getElementById("runTime");
 	runTime.innerHTML = 0;
-	//var numMoves = document.getElementById("numMoves");
+	var numMoves = document.getElementById("numMoves");
 	numMoves.innerHTML = 0;
+	var goodMoves = document.getElementById("numMoves");
+	goodMoves.innerHTML = 0;
 
 	STATS = {
 		steps:0,
@@ -431,17 +433,14 @@ window.render = function(){
 	if(assetsLeft>0 || !draggables) return;
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// NEVER ENDING SHARKS
-	// Timer var and related method needs to be accessible to entire render function
-	//var timer = 0;
-	//var t = 0;
-	//function runTimer(){
-	//	t += 1;
-	//	runTime.innerHTML = t;
-	//}
-	//var start, end, time;
-	var t0;
-	var t1;
-	//console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+	//var runTime = document.getElementById("runTime");
+	//runTime.innerHTML = 0;
+	//var numMoves = document.getElementById("numMoves");
+	//numMoves.innerHTML = 0;
+	//var goodMoves = document.getElementById("goodMoves");
+	//goodMoves.innerHTML = 0;
+	var t0 = 0;
+	var t1 = 0;
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	// Is Stepping?
@@ -449,13 +448,8 @@ window.render = function(){
 		step();
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		// NEVER ENDING SHARKS
-		//var startTime = new Date().getTime();
-		//timer = setInterval(runTimer, 1000);
-		//start = new Date().getTime();
 		t0 = window.performance.now();
 		runTime.innerHTML = Math.round(t0 / 1000) - 1;
-
-
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 
@@ -481,18 +475,6 @@ window.render = function(){
 
 	// Done stepping?
 	if(isDone()){
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// NEVER ENDING SHARKS
-		//var endTime = new Date().getTime();
-		//runTime.innerHTML = endTime - startTime;
-		//clearInterval(timer);
-		//end = new Date().getTime();
-		//time = end - start;
-		//t1 = window.performance.now();
-		//var time = Math.round((t1-t0) * 1000);
-		//runTime.innerHTML = 'Run time was ' + time + ' seconds';
-		//alert('Execution time: ' + time);
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		doneBuffer--;
 
 
@@ -775,21 +757,21 @@ function step(){
 			var totalDistance = distanceX + distanceY;
 			distances.push(totalDistance);
 		}
-		// Find the index of the lowest value of totalDistance
+		// Find the index of the largest value of totalDistance
 		// This requires the following helper function:
-		function indexOfSmallest(a) {
+		function indexOfLargest(a) {
 			var largest = 0;
 			for (var i = 1; i < a.length; i++) {
 				if (a[i] > a[largest]) largest = i;
 			}
 			return largest;
 		}
-		var smallestDistance = indexOfSmallest(distances);
+		var largestDistance = indexOfLargest(distances);
 		// The last polygon tends to get hung up
 		// If there's only one left, return to random sorting
 		if(shaking.length < 3) RANDOM_MOVE = true;
 		else{
-			var closestSpot = empties[smallestDistance];
+			var closestSpot = empties[largestDistance];
 			if(!closestSpot) return;
 			shaker.gotoX = closestSpot.x;
 			shaker.gotoY = closestSpot.y;
